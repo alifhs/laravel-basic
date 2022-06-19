@@ -3,6 +3,8 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\Auth\UserAuthController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -18,8 +20,12 @@ use App\Http\Controllers\ArticleController;
 // Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //     return $request->user();
 // });
-Route::get('articles',[ArticleController::class, 'index'] );
+// Route::get('articles',[ArticleController::class, 'index'] );
 Route::get('articles/{article}',[ArticleController::class, 'show']);
 Route::post('articles',[ArticleController::class, 'store']);
 Route::put('articles/{article}',[ArticleController::class, 'update']);
 Route::delete('articles/{article}',[ArticleController::class, 'delete']);
+Route::post('/register', [UserAuthController::class, 'register']);
+Route::post('/login', [UserAuthController::class,'login']);
+
+Route::get('/articles', [ArticleController::class, 'index'])->middleware('auth:api');
